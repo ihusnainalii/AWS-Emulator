@@ -1,0 +1,19 @@
+services:
+  aws-emulator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: aws-emulator:latest
+    container_name: aws-emulator
+    ports:
+      - "127.0.0.1:9297:9297"
+    environment:
+      - HOME=${HOME}
+    volumes:
+      - ${HOME}/.aws/emulator:${HOME}/.aws/emulator
+    command: ["-a", "off"]
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    restart: unless-stopped
